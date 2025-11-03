@@ -36,15 +36,20 @@ async function getSpotifyPlaylistTracks (playlistID, accessToken) {
 const songList = document.getElementById("song-list")
 
 // Creating Song HTML Elements
-let len = songs.length
+let len = songs.length;
 for (let i = 0; i < len; i++) {
-    const songItem = document.createElement("div");
-    songItem.classList.add("song-item");
+  const song = songs[i]; // hent sangen
+  const songItem = document.createElement("div");
+  songItem.classList.add("song-item");
 
-    songItem.innerHTML
+  songItem.innerHTML = `
     <div class="song-info">
-        <img class="song-cover" src="${song.cover}" alt="${song.title} cover art">
-        <div class="song-cover">
-            <span class="song-name">${song.title}</span>
-        </div>
+      <img class="song-cover" src="${song.cover}" alt="${song.title} cover art">
+      <div class="song-cover">
+        <span class="song-name">${song.title}</span>
+      </div>
+    </div>
+  `;
+
+  document.querySelector(".songs-container").appendChild(songItem);
 }
