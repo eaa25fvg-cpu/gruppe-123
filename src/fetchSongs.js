@@ -32,7 +32,6 @@ async function getSpotifyPlaylistTracks (playlistID, accessToken) {
     }
 }
 
-
 const songList = document.getElementById("song-list")
 
 // Creating Song HTML Elements
