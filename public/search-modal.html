@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Find sange</title>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
+
+    <script src="components/breadcrumb.js" type="module"></script>
+    <script src="song-item.js" type="module"></script>
+
+  </head>
+  <body>
+
+    <nav-breadcrumb></nav-breadcrumb>
+    <button id="openModalBtn">Open modal</button>
+
+    <div class="modal-overlay" id="s-modal">
+      <div class="modal">
+        <div class="search">
+          <div class="search-container">
+            <img class="search-icon" src="files/search.png" />
+            <form action="">
+              <input
+                class="search-input"
+                id="searchInput"
+                type="text"
+                placeholder="Søg efter sange"
+              />
+            </form>
+          </div>
+        </div>
+        <div class="content-inner">
+          <div class="results empty-state">
+            <div id="song-list" class="song-list"></div>
+            <h3>Populære sange</h3>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="floating-queue">
+        <div class="queue-list">
+        </div>
+        <div class="summary">
+            <div class="text-wrapper">
+                <p id="price">4 kr.</p>
+                <p id="song-count">2 sange</p>
+            </div>
+            <button class="primary-btn">Gå til betaling</button>
+        </div>
+    </div>
+    
+    <script type="module">
+      import {
+        animate,
+        scroll,
+      } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
+
+      const openBtn = document.getElementById("openModalBtn");
+      const closeBtn = document.getElementById("closeModalBtn");
+      const modal = document.getElementById("s-modal");
+
+      function showModal() {
+        // make layout visible first
+        modal.style.display = "flex";
+
+        // animate in: from opacity 0 + scale 0.95 → opacity 1 + scale 1
+        animate(
+          modal,
+          { opacity: [0, 1], scale: [0.95, 1] },
+          { duration: 0.3, easing: "ease-out" }
+        );
+      }
+
+      function hideModal() {
+        // animate out: opacity 1→0 + scale 1→0.95
+        const animation = animate(
+          modal,
+          { opacity: [1, 0], scale: [1, 0.95] },
+          { duration: 0.25, easing: "ease-in" }
+        );
+
+        // After animation finishes, hide it
+        animation.finished.then(() => {
+          modal.style.display = "none";
+        });
+      }
+
+      // event handlers
+      openBtn.addEventListener("click", showModal);
+
+      window.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          window.getComputedStyle(modal).display !== "none"
+        ) {
+          hideModal();
+        }
+      });
+
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          hideModal();
+        }
+      });
+    </script>
+
+<script>
+    const tracks = [
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d000048514dcb6c5df15cf74596ab25a4",
+        spotify_link:
+          "https://open.spotify.com/track/1CPZ5BxNNd0n0nF4Orb9JS",
+        title: "Golden",
+        artist: "HUNTR/X",
+        album:
+          "KPop Demon Hunters (Soundtrack from the Netflix Film)",
+        duration: "3:14",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d00004851d7812467811a7da6e6a44902",
+        spotify_link:
+          "https://open.spotify.com/track/53iuhJlwXhSER5J2IYYv1W",
+        title: "The Fate of Ophelia",
+        artist: "Taylor Swift",
+        album: "The Life of a Showgirl",
+        duration: "3:46",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d00004851d2eb391e0b3c3bc21c127db6",
+        spotify_link:
+          "https://open.spotify.com/track/7qjZnBKE73H4Oxkopwulqe",
+        title: "back to friends",
+        artist: "sombr",
+        album: "I Barely Know Her",
+        duration: "3:19",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d00004851d7812467811a7da6e6a44902",
+        spotify_link:
+          "https://open.spotify.com/track/3yWuTOYDztXjZxdE2cIRUa",
+        title: "Opalite",
+        artist: "Taylor Swift",
+        album: "The Life of a Showgirl",
+        duration: "3:55",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d000048519a336bfb6d40bbd90a507417",
+        spotify_link:
+          "https://open.spotify.com/track/0mYXRQpTGjaLJt1l9MY4ps",
+        title: "Man I Need",
+        artist: "Olivia Dean",
+        album: "The Art of Loving",
+        duration: "3:04",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d0000485142fe69c0e7e5c92f01ece8ce",
+        spotify_link:
+          "https://open.spotify.com/track/2RkZ5LkEzeHGRsmDqKwmaJ",
+        title: "Ordinary",
+        artist: "Alex Warren",
+        album: "You'll Be Alright, Kid (Chapter 1)",
+        duration: "3:06",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d0000485171d62ea7ea8a5be92d3c1f62",
+        spotify_link:
+          "https://open.spotify.com/track/6dOtVTDdiauQNBQEDOtlAB",
+        title: "BIRDS OF A FEATHER",
+        artist: "Billie Eilish",
+        album: "HIT ME HARD AND SOFT",
+        duration: "3:30",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d000048514dcb6c5df15cf74596ab25a4",
+        spotify_link:
+          "https://open.spotify.com/track/02sy7FAs8dkDNYsHp4Ul3f",
+        title: "Soda Pop",
+        artist: "Saja Boys",
+        album:
+          "KPop Demon Hunters (Soundtrack from the Netflix Film)",
+        duration: "2:30",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d0000485198b4089e9c90ec28ab04d70c",
+        spotify_link:
+          "https://open.spotify.com/track/4G7bbgD2DHORU4frrWoCXp",
+        title: "Posso Até Não Te Dar Flores",
+        artist: "DJ Japa NK",
+        album: "Posso Até Não Te Dar Flores",
+        duration: "2:38",
+      },
+      {
+        cover_image:
+          "https://i.scdn.co/image/ab67616d00004851b0860cf0a98e09663c82290c",
+        spotify_link:
+          "https://open.spotify.com/track/7so0lgd0zP2Sbgs2d7a1SZ",
+        title: "Die With A Smile",
+        artist: "Lady Gaga",
+        album: "MAYHEM",
+        duration: "4:11",
+      },
+    ];
+
+    const songList = document.getElementById("song-list");
+    const searchInput = document.getElementById("searchInput");
+
+
+    function renderTracks(filteredTracks = tracks) {
+  if (!songList) return;
+  let html = "";
+  filteredTracks.forEach(track => {
+    // escape values if any content may be untrusted (see note below)
+    const t = track.title;
+    const a = track.artist;
+    const c = track.cover_image;
+    const al = track.album;
+    const d = track.duration;
+    html += `
+      <song-item
+        title="${t}"
+        artist="${a}"
+        cover="${c}"
+        album="${al}"
+        duration="${d}">
+      </song-item>
+    `;
+  });
+  songList.innerHTML = html;
+}
+
+renderTracks()
+
+// Search filter
+searchInput.addEventListener("input", (e) => {
+    const query = e.target.value.toLowerCase();
+    const filtered = tracks.filter(track =>
+        track.title.toLowerCase().includes(query)
+    );
+    renderTracks(filtered);
+})
+
+  </script>
+  </body>
+</html>
