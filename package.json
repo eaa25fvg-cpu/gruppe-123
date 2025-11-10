@@ -2,7 +2,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "fetch-songs": "node src/fetchSongs.js"
+    "fetch-songs": "node src/fetchSongs.js",
+    "server": "node server.js"
+    
+
   },
   "dependencies": {
     "express": "5.1.0",
