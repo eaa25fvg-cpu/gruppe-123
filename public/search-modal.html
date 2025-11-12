@@ -52,6 +52,23 @@
 
     <div class="floating-queue">
         <div class="queue-list">
+          <script>
+            // Funktion til at vise køen i queue-list
+            function renderQueue() {
+              const queueList = document.querySelector(".queue-list");
+              if (!queueList) return;
+              let html = "";
+              queue.forEach(song => {
+                html += `
+                  <div class="queued-song">
+                    <img src="${song.cover}" alt="cover" width="40" />
+                    <span>${song.title} - ${song.artist}</span>
+                  </div>
+                `;
+              });
+              queueList.innerHTML = html;
+            }
+          </script>
         </div>
         <div class="summary">
             <div class="text-wrapper">
@@ -227,7 +244,7 @@
     const searchInput = document.getElementById("searchInput");
 
 
-    function renderTracks(filteredTracks = tracks) {
+function renderTracks(filteredTracks = tracks) {
   if (!songList) return;
   let html = "";
   filteredTracks.forEach(track => {
@@ -238,6 +255,7 @@
     const al = track.album;
     const d = track.duration;
     html += `
+    <div class="clickableSong" data-title="${t}" data-artist="${a}" data-album="${al}" data-cover="${c}" data-duration="${d}">
       <song-item
         title="${t}"
         artist="${a}"
@@ -245,9 +263,31 @@
         album="${al}"
         duration="${d}">
       </song-item>
+    </div>
     `;
   });
   songList.innerHTML = html;
+
+   // Add event listeners
+  document.querySelectorAll('.clickableSong').forEach(elem => {
+    elem.addEventListener('click', function () {
+      const song = {
+        title: this.dataset.title,
+        artist: this.dataset.artist,
+        cover: this.dataset.cover,
+      };
+      addToQueue(song);
+    });
+  });
+}
+
+// Example queue array
+let queue = [];
+
+// Function to add song to queue
+function addToQueue(song) {
+  queue.push(song);
+  console.log('Queue:', queue); // For demonstration; update UI as needed
 }
 
 renderTracks()
