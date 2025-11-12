@@ -2,6 +2,7 @@ body {
     display: flex;
     background-color: #9747FF;
     justify-content: center;
+    flex-direction: column;
 }
 
 h1,h2,h3,h4,h5,h6,p,span {
@@ -163,7 +164,8 @@ h3 {
    border-radius: 32px;
    border: 1px solid rgba(255, 255, 255, 0.15);
    background: rgba(0, 0, 0, 0.50);
-   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 32px 10px rgba(0, 0, 0, 0.16);
+   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 32px 0 rgba(0, 0, 0, 0.16);
+   backdrop-filter: blur(4px);
 
 }
 
@@ -222,7 +224,7 @@ form {
 .floating-queue {
     display: flex;
     position: absolute;
-    bottom: 40px;
+    bottom: 24px;
     height: 70px;
     width: 80%;
     max-width: 980px;
@@ -230,6 +232,7 @@ form {
     padding: 8px;
     border-radius: 16px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25), 0 4px 16px 0 rgba(0, 0, 0, 0.16);
+    backdrop-filter: blur(4px);
 }
 
 .queue-list {
@@ -249,4 +252,92 @@ form {
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
+}
+
+
+/* Genre Item */
+.genre-card {
+    display: flex;
+    width: 146px;
+    padding: 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.06);
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+    cursor: pointer;
+}
+
+.genre-card:hover {
+    background: rgba(255, 255, 255, 0.12);
+}
+
+.genre-card:active {
+    background: rgba(251, 255, 131, 0.40);
+}
+
+.image-wrapper {
+    position: relative;
+    display: flex;
+    align-self: stretch;
+    height: 100px;
+}
+
+.genre-image1 {
+    width: 52px;
+    height: 52px;
+    transform: rotate(-20deg);
+    position: absolute;
+    bottom: 6px;
+    left: 6px;
+    border-radius: 4px;
+    box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+.genre-image2 {
+    width: 52px;
+    height: 52px;
+    transform: rotate(20deg);
+    position: absolute;
+    bottom: 22px;
+    left: 46px;
+    border-radius: 4px;
+    box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+.genre-image3 {
+    width: 52px;
+    height: 52px;
+    transform: rotate(-20deg);
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    border-radius: 4px;
+    box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.45);
+}
+
+.info-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+}
+
+.ph-plus-circle {
+    justify-self: end;
+    font-size: 30px;
+    color: #FBFE81;
+    transition: transform 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.g-title {
+    font-size: 16px;
+    font-weight: 600;
+}
+
+.g-data {
+    font-size: 14px;
+    font-weight: 400;
 }

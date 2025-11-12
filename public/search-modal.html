@@ -43,7 +43,6 @@
         <div class="content-inner">
           <div class="results empty-state">
             <div id="song-list" class="song-list"></div>
-            <h3>Populære sange</h3>
           </div>
         </div>
       </div>
@@ -55,13 +54,13 @@
         <div class="summary">
             <div class="text-wrapper">
                 <p id="price">4 kr.</p>
-                <p id="song-count">2 sange</p>
+                <p id="songCount">2 sange</p>
             </div>
             <button class="primary-btn">Gå til betaling</button>
         </div>
     </div>
     
-    <script type="module">
+    <script type="module"> // Modal funktionalitet
       import {
         animate,
         scroll,
@@ -72,10 +71,8 @@
       const modal = document.getElementById("s-modal");
 
       function showModal() {
-        // make layout visible first
         modal.style.display = "flex";
 
-        // animate in: from opacity 0 + scale 0.95 → opacity 1 + scale 1
         animate(
           modal,
           { opacity: [0, 1], scale: [0.95, 1] },
@@ -84,14 +81,12 @@
       }
 
       function hideModal() {
-        // animate out: opacity 1→0 + scale 1→0.95
         const animation = animate(
           modal,
           { opacity: [1, 0], scale: [1, 0.95] },
           { duration: 0.25, easing: "ease-in" }
         );
 
-        // After animation finishes, hide it
         animation.finished.then(() => {
           modal.style.display = "none";
         });
@@ -116,14 +111,13 @@
       });
     </script>
 
-  <script type="module">
+  <script type="module"> // Henter og viser sange
   import { loadSongs } from './app.js';
 
   const songList = document.getElementById("song-list");
   const searchInput = document.getElementById("searchInput");
 
-  // Render function
-  function renderTracks(songs = []) {
+  function renderSongs(songs = []) {
     if (!songList) return;
     let html = "";
     songs.forEach(song => {
@@ -140,18 +134,18 @@
     songList.innerHTML = html;
   }
 
-  // Fetch songs dynamically
+  // Henter sange
   async function init() {
-    const tracks = await loadSongs(); // get data from app.js
-    renderTracks(tracks);
+    const songs = await loadSongs(); // henter data fra app.js
+    renderSongs(songs);
 
-    // Add live search
+    // Tilføjer søgefunktion
     searchInput.addEventListener("input", (e) => {
       const query = e.target.value.toLowerCase();
-      const filtered = tracks.filter(track =>
-        track.title.toLowerCase().includes(query)
+      const filtered = songs.filter(song =>
+        song.name.toLowerCase().includes(query)
       );
-      renderTracks(filtered);
+      renderSongs(filtered);
     });
   }
 
