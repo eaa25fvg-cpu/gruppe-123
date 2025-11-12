@@ -1,4 +1,5 @@
-async function loadSongs() {
+// app.js
+export async function loadSongs() {
   try {
     console.log('Henter sange...');
     const response = await fetch('/api/songs');
@@ -7,12 +8,13 @@ async function loadSongs() {
       throw new Error('Kunne ikke hente sange');
     }
     
-    const song = await response.json();
-    console.log('Modtog', song.length, 'sange');
-    displaySongs(song);
+    const songs = await response.json();
+    console.log('Modtog', songs.length, 'sange');
+    return songs; // <— IMPORTANT: return the data
   } catch (error) {
     console.error('Fejl:', error);
-    document.getElementById('songList').innerHTML = '<p>Kunne ikke hente sange</p>';
+    document.getElementById('song-list').innerHTML = '<p>Kunne ikke hente sange</p>';
+    return [];
   }
 }
 

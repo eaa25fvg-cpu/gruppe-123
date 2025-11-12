@@ -8,6 +8,11 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
 </head>
 <body>
     <div class="breadcrumb">
@@ -48,7 +53,6 @@
 </div>
 
 
-
     <div class="summary-modal">
         <div class="choice-list">
             <div class="choice-item">
@@ -56,6 +60,29 @@
             </div>
         </div>
     </div>
-    <script src="app.js"></script>
+
+    <div class="genre-card">
+        <div class="image-wrapper">
+            <img class="genre-image1" src="https://i.scdn.co/image/ab67616d00004851eec376776dc8377060f2be5c">
+            <img class="genre-image2" src="https://i.scdn.co/image/ab67616d00004851ec4f8c81eb9ddee00e01798d">
+            <img class="genre-image3" src="https://i.scdn.co/image/ab67616d000048513ef4572e653cc08326c9551a">
+        </div>
+        <div class="info-wrapper">
+            <div class="genre-info">
+                <p class="g-title">Snooze</p>
+                <p class="g-data">21 sange</p>
+            </div>
+            <div class="add-wrapper"></div>
+            <i class="ph-fill ph-plus-circle"></i>
+        </div>
+    </div>
+
+    <script type="module"> // Henter og viser sange
+        import { loadSongs } from './app.js';      
+        
+
+
+
+    </script>
 </body>
 </html>
