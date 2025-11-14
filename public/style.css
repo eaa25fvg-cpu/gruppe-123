@@ -3,11 +3,14 @@ body {
     background-color: #9747FF;
     justify-content: center;
     flex-direction: column;
+    margin: 0px;
+    padding: 32px;
 }
 
 h1,h2,h3,h4,h5,h6,p,span {
     font-family: "Inter", sans-serif;
-    color: #fff
+    color: #fff;
+    margin: 0px;
 }
 
 p {
@@ -17,6 +20,11 @@ p {
 
 h3 {
     font-size: 16px;
+    font-weight: 600;
+}
+
+h4 {
+    font-size: 14px;
     font-weight: 600;
 }
 
@@ -58,10 +66,24 @@ h3 {
     font-weight: 600;
 }
 
-.song-list {
-    padding: 60px;
-    padding: 12px;
+.song-header {
+    display: inline-grid;
+    grid-template-columns: 3fr 4fr 1fr 50px;
+    align-self: center;
     width: 100%;
+    max-width: 940px;
+    padding: 0px 8px 8px 8px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.40);
+    box-sizing: border-box;
+}
+.song-list {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    padding: 8px;
+    gap: 1px;
+    width: 100%;
+    max-width: 956px;
     box-sizing: border-box;
 }
 
@@ -125,7 +147,7 @@ h3 {
     font-weight: 500;
 }
 
-/* Checkout Page Styles */
+/* Checkout Page Styles START */
 
 .row-container {
     display: flex;
@@ -142,16 +164,38 @@ h3 {
     width: 100%;
 }
 
+/* Checkout Page Styles END */
+
+.search-btn {
+    align-self: center;
+    cursor:text;
+    display: flex;
+    width: 100%;
+    max-width: 800px;
+    padding: 16px;
+    gap: 10px;
+    border-radius: 99px;
+    border: 2px solid rgba(255, 255, 255, 0.60);
+}
+
+.search-btn p {
+    font-size: 18px;
+}
+
 .modal-overlay {
     display: none;
-    position: absolute;
+    position: fixed;
     width: 100vw;
     height: 100vh;
+    top: 0;
+    left: 0;
+    z-index: 1;
     align-items: center;
     justify-content: center;
-
-
+    background: rgba(0, 0, 0, 0.20);
+    backdrop-filter: blur(6px);
 }
+
 .modal {
    display: flex;
    width: 100%; 
@@ -163,10 +207,9 @@ h3 {
    align-items: stretch;
    border-radius: 32px;
    border: 1px solid rgba(255, 255, 255, 0.15);
-   background: rgba(0, 0, 0, 0.50);
+   background: rgba(60, 28, 102, 0.85);
    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.25), 0 4px 32px 0 rgba(0, 0, 0, 0.16);
-   backdrop-filter: blur(4px);
-
+   overflow: hidden;
 }
 
 .search-input {
@@ -190,12 +233,18 @@ input:focus {
     outline: 0px;
 }
 
+.btn-search-icon {
+    width: 24px;
+    height: 24px;
+}
+
 .search-icon {
     width: 22px;
     position: absolute;
     top: 24px;
     left: 14px;
     right: auto;
+
 }
 
 .search-container {
@@ -222,22 +271,31 @@ form {
 
 
 .floating-queue {
-    display: flex;
-    position: absolute;
-    bottom: 24px;
+    display: none;
+    position: fixed;
+    left: 50%;       
+    transform: translateX(-50%); /* center correction */
+    bottom: 24px;    
     height: 70px;
     width: 80%;
     max-width: 980px;
-    background: rgba(0, 0, 0, 0.50);
+    background: rgba(60, 28, 102, 0.85);
     padding: 8px;
     border-radius: 16px;
     box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.25), 0 4px 16px 0 rgba(0, 0, 0, 0.16);
     backdrop-filter: blur(4px);
+    z-index: 4; 
 }
 
 .queue-list {
-    display: flex;
+    display: grid;
     flex: 1 0 0;
+    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+}
+
+.queue-item {
+    width: 100%;
 }
 
 .summary {
@@ -256,10 +314,29 @@ form {
 
 
 /* Genre Item */
+
+.genre-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 940px;
+    align-self: center;
+    margin: 80px 0px 80px 0px;
+}
+
+#genreWrapper {
+    display: grid;
+    gap: 8px;
+    grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr;
+    width: 100%;
+}
+
+
 .genre-card {
     display: flex;
-    width: 146px;
-    padding: 16px;
+    align-self: stretch;
+    padding: 12px;
     flex-direction: column;
     align-items: flex-start;
     gap: 10px;
@@ -268,13 +345,14 @@ form {
     background: rgba(255, 255, 255, 0.06);
     box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.06);
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
 
 .genre-card:hover {
     background: rgba(255, 255, 255, 0.12);
 }
 
-.genre-card:active {
+.genre-card.active {
     background: rgba(251, 255, 131, 0.40);
 }
 
@@ -290,8 +368,8 @@ form {
     height: 52px;
     transform: rotate(-20deg);
     position: absolute;
-    bottom: 6px;
-    left: 6px;
+    bottom: 2px;
+    left: 2px;
     border-radius: 4px;
     box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.45);
 }
@@ -301,8 +379,8 @@ form {
     height: 52px;
     transform: rotate(20deg);
     position: absolute;
-    bottom: 22px;
-    left: 46px;
+    bottom: 12px;
+    left: 32px;
     border-radius: 4px;
     box-shadow: 1px -1px 2px 0 rgba(0, 0, 0, 0.45);
 }
@@ -332,6 +410,10 @@ form {
     transition: transform 0.2s cubic-bezier(0.65, 0, 0.35, 1);
 }
 
+.genre-card.active .ph-plus-circle {
+    transform: rotate(-45deg);
+}
+
 .g-title {
     font-size: 16px;
     font-weight: 600;
@@ -341,3 +423,65 @@ form {
     font-size: 14px;
     font-weight: 400;
 }
+
+
+.song-wrapper {
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: 3fr 4fr 1fr 50px;
+    align-items: center;
+    width: 100%;
+    padding: 8px;
+    box-sizing: border-box;
+    border-radius: 12px;
+    }
+
+    .song-wrapper:hover {
+    background-color: #FFFFFF1A;
+    }
+
+    .meta-wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    }
+
+    .cover {
+width: 46px;
+height: 46px;
+border-radius: 6px;
+border-style: solid 1px;
+border-color: #FFFFFF1F;
+}
+
+ .song-wrapper .text-wrapper {
+    align-items: flex-start;
+ }
+
+
+    .song-wrapper p {
+    font-family: "Inter", sans-serif;
+    color: rgba(255, 255, 255, 0.80);
+    margin: 0;
+    line-height: 1.4;
+    font-size: 14px;
+    }
+
+    .song-wrapper .title {
+    color: #fff;
+    font-size: 16px;
+    }
+
+    .ph-plus-circle {
+    justify-self: end;
+    font-size: 30px;
+    color: #FBFE81;
+    transition: transform 0.2s cubic-bezier(0.65, 0, 0.35, 1);
+    }
+
+    .song-wrapper.active {
+    background: rgba(251, 255, 131, 0.20);
+    }
+    .song-wrapper.active .ph-plus-circle {
+    transform: rotate(-45deg);
+    }

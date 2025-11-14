@@ -1,88 +1,368 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Find sange</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap"
+      rel="stylesheet"
+    />
     <link
       rel="stylesheet"
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
     />
-</head>
-<body>
-    <div class="breadcrumb">
-        <p class="breadcrumb-item">1. Vælg sange</p>
-        <p class="breadcrumb-item">2. Checkout</p>
+    <script src="scripts/song-item.js" type="module"></script>
+    <script src="scripts/queue-item.js" type="module"></script>
+    <script src="./scripts/queue.js"></script>
+    <script src="./scripts/breadcrumb.js" type="module"></script>
+  </head>
+  <body>
+    <nav-breadcrumb></nav-breadcrumb>
+
+    <div id="openModalBtn" class="search-btn">
+      <img class="btn-search-icon" src="files/search.png" />
+      <p>Søg efter sange</p>
     </div>
 
-    <div class="search">
-        <div class="search-container">
-            <img class="search-icon" src="files/search.png">
+    <div class="genre-content">
+      <h4>Genre</h4>
+      <div id="genreWrapper"></div>
+    </div>
+
+    <div class="song-header">
+      <div>
+        <h4>Sang</h4>
+      </div>
+      <div>
+        <h4>Album</h4>
+      </div>
+      <div>
+        <h4>Varighed</h4>
+      </div>
+      <div></div>
+    </div>
+    <div id="song-list" class="song-list"></div>
+
+    <div class="modal-overlay" id="s-modal">
+      <div id="modal-inner" class="modal">
+        <div class="search">
+          <div class="search-container">
+            <img class="search-icon" src="files/search.png" />
             <form action="">
-                <input class="search-input" type="text" placeholder="Søg efter sange">
+              <input
+                class="search-input"
+                id="searchInput"
+                type="text"
+                placeholder="Søg efter sange"
+              />
             </form>
+          </div>
         </div>
+        <div class="content-inner">
+          <div class="results empty-state">
+            <div id="m-song-list" class="song-list"></div>
+          </div>
+        </div>
+      </div>
     </div>
 
-    <div class="song-list">
-        <div class="song-item">
-            <div class="song-info">
-                <img class="song-cover" src="files/sample-cover.png">
-                <div class="song-meta">
-                    <span class="song-name">Snooze</span>
-                    <span class="song-artist">SZA</span>
-                </div>
-            </div>
-            <p class="album">SOS</p
-            <div class="song-toggle">
-                <img src="files/plus-icon.png" class="add-icon">
-            </div> 
+    <div class="floating-queue" id="queue">
+      <div id="queue-list" class="queue-list"></div>
+      <div class="summary">
+        <div class="text-wrapper">
+          <p id="price">4 kr.</p>
+          <p id="songCount">2 sange</p>
         </div>
+        <button class="primary-btn">Gå til betaling</button>
+      </div>
     </div>
 
+    <script type="module">
+      // Modal funktionalitet
+      import {
+        animate,
+        scroll,
+      } from "https://cdn.jsdelivr.net/npm/motion@latest/+esm";
 
+      const openBtn = document.getElementById("openModalBtn");
+      const closeBtn = document.getElementById("closeModalBtn");
+      const modal = document.getElementById("s-modal");
+      const modalInner = document.getElementById("modal-inner");
 
+      function showModal() {
+        modal.style.display = "flex";
 
-<div class="search-modal">
-    
-</div>
+        animate(
+          modalInner,
+          { opacity: [0, 1], scale: [0.95, 1] },
+          { duration: 0.3, easing: "ease-out" }
+        );
+      }
 
+      function hideModal() {
+        const animation = animate(
+          modalInner,
+          { opacity: [1, 0], scale: [1, 0.95] },
+          { duration: 0.25, easing: "ease-in" }
+        );
 
-    <div class="summary-modal">
-        <div class="choice-list">
-            <div class="choice-item">
+        animation.finished.then(() => {
+          modal.style.display = "none";
+        });
+      }
 
-            </div>
-        </div>
-    </div>
+      // event handlers
+      openBtn.addEventListener("click", showModal);
 
-    <div class="genre-card">
-        <div class="image-wrapper">
-            <img class="genre-image1" src="https://i.scdn.co/image/ab67616d00004851eec376776dc8377060f2be5c">
-            <img class="genre-image2" src="https://i.scdn.co/image/ab67616d00004851ec4f8c81eb9ddee00e01798d">
-            <img class="genre-image3" src="https://i.scdn.co/image/ab67616d000048513ef4572e653cc08326c9551a">
-        </div>
-        <div class="info-wrapper">
-            <div class="genre-info">
-                <p class="g-title">Snooze</p>
-                <p class="g-data">21 sange</p>
-            </div>
-            <div class="add-wrapper"></div>
-            <i class="ph-fill ph-plus-circle"></i>
-        </div>
-    </div>
+      window.addEventListener("keydown", (e) => {
+        if (
+          e.key === "Escape" &&
+          window.getComputedStyle(modal).display !== "none"
+        ) {
+          hideModal();
+        }
+      });
 
-    <script type="module"> // Henter og viser sange
-        import { loadSongs } from './app.js';      
-        
-
-
-
+      window.addEventListener("click", (e) => {
+        if (e.target === modal) {
+          hideModal();
+        }
+      });
     </script>
-</body>
+
+    <script type="module">
+      // Henter og viser sange
+      import { loadSongs } from "./app.js";
+
+      // Henter og filtrer genre
+      function renderGenres(songs) {
+        const genreList = songs.map(getGenres);
+
+        function getGenres(songItem) {
+          return songItem.genre;
+        }
+
+        const genres = [];
+
+        for (let i = 0; i < genreList.length; i++) {
+          if (!genres.some((g) => g.name === genreList[i])) {
+            const item = {
+              name: genreList[i],
+              featured_images: songs
+                .filter((s) => s.genre === genreList[i])
+                .map((s) => s.cover_image)
+                .slice(0, 3),
+              song_count: songs.filter((s) => s.genre === genreList[i]).length,
+            };
+            genres.push(item);
+          }
+          if (genres.length === 6) {
+            break;
+          }
+        }
+
+        const genreWrapper = document.getElementById("genreWrapper");
+        let genreHtml = "";
+        genres.forEach((genre) => {
+          genreHtml += `
+  <div class="genre-card" data-genre="${genre.name}">
+  <div class="image-wrapper">
+  <img
+    class="genre-image1"
+    src="${genre.featured_images[0]}"
+  />
+  <img
+    class="genre-image2"
+    src="${genre.featured_images[1]}"
+  />
+  <img
+    class="genre-image3"
+    src="${genre.featured_images[2]}"
+  />
+  </div>
+  <div class="info-wrapper">
+   <div class="genre-info">
+    <p class="g-title">${genre.name}</p>
+    <p class="g-data">${genre.song_count} sange</p>
+  </div>
+      <div class="add-wrapper"></div>
+      <i class="ph-fill ph-plus-circle"></i>
+  </div>
+  </div>
+  `;
+        });
+        genreWrapper.innerHTML = genreHtml;
+      }
+
+      // Viser sange
+      const songList = document.getElementById("song-list");
+
+      function renderSongs(songs = []) {
+        if (!songList) return;
+        let html = "";
+        songs.forEach((song) => {
+          html += `
+        <div class="song-wrapper" data-id="${song.id}" data-name="${song.name}" data-artist_name="${song.artist_name}" data-cover_image="${song.cover_image}">
+            <div class="meta-wrapper">
+              <img class="cover" src="${song.cover_image}" alt="Cover image" />
+              <div class="text-wrapper">
+                <p class="title">${song.name}</p>
+                <p class="artist">${song.artist_name}</p>
+                </div>
+                 </div>
+      <p class="album">${song.album_name}</p>
+      <p class="duration">${song.duration}</p>
+    <i id="add-button" class="ph-fill ph-plus-circle"></i>
+</div>
+      `;
+        });
+        songList.innerHTML = html;
+        songEventHandler();
+        refreshAllSongItems();
+      }
+
+      // Viser sange - For Modal
+      const songListModal = document.getElementById("m-song-list");
+
+      function renderSongsModal(songs = []) {
+        if (!songListModal) return;
+        let html = "";
+        songs.forEach((song) => {
+          html += `
+          <div class="song-wrapper" data-id="${song.id}" data-name="${song.name}" data-artist_name="${song.artist_name}" data-cover_image="${song.cover_image}">
+            <div class="meta-wrapper">
+              <img class="cover" src="${song.cover_image}" alt="Cover image" />
+              <div class="text-wrapper">
+                <p class="title">${song.name}</p>
+                <p class="artist">${song.artist_name}</p>
+                </div>
+                 </div>
+                 <p class="album">${song.album_name}</p>
+                 <p class="duration">${song.duration}</p>
+                 <i id="add-button" class="ph-fill ph-plus-circle"></i>
+            </div>
+          `;
+        });
+        songListModal.innerHTML = html;
+        songEventHandler()
+        refreshAllSongItems()
+      }
+
+      const queueList = document.getElementById("queue-list");
+      const queueContainer = document.getElementById("queue");
+
+      function renderQueue() {
+        let queueItems = songsQueue;
+        let price = queueItems.length * 2;
+        if (queueItems.length !== 0) {
+          queueContainer.style.display = "flex";
+        } else {
+          queueContainer.style.display = "none";
+        }
+        document.getElementById("price").innerHTML = price + " kr.";
+        document.getElementById("songCount").innerHTML =
+          songsQueue.length + " sange";
+        let html = "";
+        queueItems.forEach((song) => {
+          html += `
+          <div class="queueItem">
+            <queue-item
+              title="${song.name}"
+              artist="${song.artist_name}"
+              cover="${song.cover_image}"
+            >
+            </queue-item>
+          </div>
+          `;
+        });
+        queueList.innerHTML = html;
+      }
+
+      // Udfører diverse scripts
+      async function init() {
+        const songs = await loadSongs(); // henter sange fra app.js
+        renderGenres(songs);
+        renderSongs(songs);
+        renderSongsModal(songs);
+        renderQueue();
+        genreEventHandler(songs);
+        songEventHandler();
+
+        // Tilføjer søgefunktion - Modal
+        searchInput.addEventListener("input", (e) => {
+          const query = e.target.value.toLowerCase();
+          const filtered = songs.filter((song) =>
+            song.name.toLowerCase().includes(query)
+          );
+          renderSongsModal(filtered);
+          songEventHandler();
+        });
+      }
+      let activeGenre = null;
+
+      function genreEventHandler(songs) {
+        const genreCard = document.querySelectorAll(".genre-card");
+
+        // Tilføjer event listner
+        genreCard.forEach((card) => {
+          card.addEventListener("click", () => {
+            const selectedGenre = card.dataset.genre;
+
+            // toggle state
+            if (activeGenre === selectedGenre) {
+              activeGenre = null;
+              card.classList.remove("active");
+              renderSongs(songs);
+            } else {
+              activeGenre = selectedGenre;
+
+              // fjerner active class fra andre cards
+              genreCard.forEach((c) => c.classList.remove("active"));
+              card.classList.add("active");
+
+              const filteredSongs = songs.filter(
+                (s) => s.genre === selectedGenre
+              );
+              renderSongs(filteredSongs);
+            }
+          });
+        });
+      }
+
+      function refreshAllSongItems() {
+        document.querySelectorAll(".song-wrapper").forEach((songElem) => {
+          const songName = songElem.dataset.name;
+
+          // Check if this song is in the queue
+          const isInQueue = songsQueue.some((song) => song.name === songName);
+
+          // Toggle "active" class based on queue
+          songElem.classList.toggle("active", isInQueue);
+        });
+      }
+
+      function songEventHandler() {
+        document.querySelectorAll(".song-wrapper").forEach((elem) => {
+          elem.addEventListener("click", function () {
+            const song = {
+              song_id: this.dataset.id,
+              name: this.dataset.name,
+              artist_name: this.dataset.artist_name,
+              cover_image: this.dataset.cover_image,
+            };
+            addSongQueue(song);
+            renderQueue();
+            refreshAllSongItems();
+          });
+        });
+      }
+
+      init();
+    </script>
+  </body>
 </html>

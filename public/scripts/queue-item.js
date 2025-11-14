@@ -1,4 +1,4 @@
-class SongItem extends HTMLElement {
+class QueueItem extends HTMLElement {
     constructor() {
       super();
 
@@ -23,29 +23,14 @@ class SongItem extends HTMLElement {
       const artist = document.createElement('p');
       artist.classList.add('artist');
 
-      const album = document.createElement('p');
-      album.classList.add('album');
-
-      const duration = document.createElement('p');
-      duration.classList.add('duration');
-
-
-      const iconStyle = document.createElement('link');
-      iconStyle.rel = 'stylesheet';
-      iconStyle.href = 'https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css';
-      root.appendChild(iconStyle);
-
-      const addButton = document.createElement('i')
-      addButton.classList.add('ph-fill', 'ph-plus-circle');
-      addButton.id = 'add-button';
-
 
       // Gør content tilgængelig gennem parametere
       cover.src = this.getAttribute('cover');
       title.textContent = this.getAttribute('title');
       artist.textContent = this.getAttribute('artist');
-      album.textContent = this.getAttribute('album')
-      duration.textContent = this.getAttribute('duration')
+
+
+      wrapper.classList.toggle("active", this.hasAttribute("active"));
 
 
       // Styling
@@ -53,8 +38,7 @@ class SongItem extends HTMLElement {
       style.textContent = `
         .song-wrapper {
         cursor: pointer;
-        display: grid;
-        grid-template-columns: 3fr 4fr 1fr 50px;
+        display: flex;
         align-items: center;
         width: 100%;
         padding: 8px;
@@ -70,6 +54,7 @@ class SongItem extends HTMLElement {
         display: flex;
         gap: 12px;
         align-items: center;
+        align-self: stretch;
         }
 
         .cover {
@@ -101,9 +86,6 @@ class SongItem extends HTMLElement {
         transition: transform 0.2s cubic-bezier(0.65, 0, 0.35, 1);
         }
 
-        .song-wrapper.active {
-        background: rgba(251, 255, 131, 0.20);
-        }
         .active .ph-plus-circle {
         transform: rotate(-45deg);
         }
@@ -112,14 +94,25 @@ class SongItem extends HTMLElement {
 
       // Samler elementerne
       root.append(style, wrapper);
-      wrapper.append(metaWrapper, album, duration, addButton);
+      wrapper.append(metaWrapper);
       metaWrapper.append(cover, textWrapper)
       textWrapper.append(title, artist);
-      /*
-      wrapper.addEventListener('click', () => {
-        wrapper.classList.toggle('active');
-      });
-      */
+
     }
 }
-customElements.define('song-item', SongItem);
+customElements.define('queue-item', QueueItem);
+
+
+/* EXAMPLE USAGE
+          html += `
+        <div class="clickableSong" data-id="${song.id}" data-name="${song.name}" data-artist_name="${song.artist_name}" data-cover_image="${song.cover_image}">
+        <song-item
+          title="${song.name}"
+          artist="${song.artist_name}"
+          cover="${song.cover_image}"
+          album="${song.album_name}"
+          duration="${song.duration}">
+        </song-item>
+        </div>
+      `; 
+*/

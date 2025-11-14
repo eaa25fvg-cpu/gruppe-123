@@ -1,28 +1,34 @@
-let tracksQueue = ["", "", ""];
+let songsQueue = JSON.parse(localStorage.getItem("songsQueue")) || [];
 
-function addSong(songName) {
-    for(let i = 0; i < 3; i++){
-        if (tracksQueue[i] == ""){
-            tracksQueue[i]= songName;
-            console.log('added song ' + songName);
-            return;
+// Gemmer til localStorage når queue opdateres
+function saveQueue() {
+    localStorage.setItem("songsQueue", JSON.stringify(songsQueue));
+  }
+
+function addSongQueue(song) {
+    const index = songsQueue.findIndex((s) => s.name === song.name)
+
+    if (index !== -1) {
+        songsQueue.splice(index, 1)
+        console.log("Sang fjernet fra queue")
+    } else {
+
+        if (songsQueue.length < 3) {
+            songsQueue.push(song) 
+        } else {
+            console.log("Din Queue er fuld")
         }
     }
-    console.log('queue is full ');
+    saveQueue;
 }
 
 
-function removeSong(songName) {
-    for(let i = 0; i < 3; i++){
-        if (tracksQueue[i]== songName){
-            console.log('Found song ' + i);
-            for(let a = i; a < 2; a++){
-                tracksQueue[a] = tracksQueue[a + 1];
-            }
-            tracksQueue[2] = "";
-            console.log('removed song ' + songName)
-            return;
-        }
+function removeSongQueue(song) {
+    const index = songsQueue.findIndex((s) => s.name === song.name)
+    if (index !== -1) {
+        tracksQueue.splice(index, 1);
+        console.log("Fjernet sang")
+        saveQueue
     }
 }
 

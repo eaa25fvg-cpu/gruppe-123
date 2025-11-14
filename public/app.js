@@ -38,6 +38,5 @@ function displaySongs(song) {
   });
 }
 
-
 // Start når siden loader
 loadSongs();
