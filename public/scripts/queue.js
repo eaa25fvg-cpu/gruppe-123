@@ -14,14 +14,16 @@ function addSongQueue(song) {
     } else {
 
         if (songsQueue.length < 3) {
-            songsQueue.push(song) 
+            songsQueue.push(song);
+            console.log("Sang tilføjet til queue")
         } else {
             console.log("Din Queue er fuld")
         }
     }
-    saveQueue;
+    saveQueue();
 }
 
+/*
 
 function removeSongQueue(song) {
     const index = songsQueue.findIndex((s) => s.name === song.name)
@@ -52,4 +54,4 @@ function clearQueue() {
         tracksQueue[i] = "";
     }
     console.log('queue is cleared');
-}
+} */

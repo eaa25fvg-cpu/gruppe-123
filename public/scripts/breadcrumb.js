@@ -62,7 +62,7 @@ class Breadcrumb extends HTMLElement {
       if (path === '/discover.html') {
         firstItem.classList.add('active')
       } else if (path === '/checkout.html') {
-        firstItem.classList.add('active')
+        lastItem.classList.add('active')
       }
 
 

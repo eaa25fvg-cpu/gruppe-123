@@ -16,7 +16,6 @@
       type="text/css"
       href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/fill/style.css"
     />
-    <script src="scripts/song-item.js" type="module"></script>
     <script src="scripts/queue-item.js" type="module"></script>
     <script src="./scripts/queue.js"></script>
     <script src="./scripts/breadcrumb.js" type="module"></script>
@@ -78,7 +77,7 @@
           <p id="price">4 kr.</p>
           <p id="songCount">2 sange</p>
         </div>
-        <button class="primary-btn">Gå til betaling</button>
+        <button class="primary-btn" id="checkout-btn">Gå til betaling</button>
       </div>
     </div>
 
@@ -133,6 +132,10 @@
           hideModal();
         }
       });
+
+      document.getElementById("checkout-btn").addEventListener("click", () => {
+    window.location.href = "/checkout.html";
+  });
     </script>
 
     <script type="module">

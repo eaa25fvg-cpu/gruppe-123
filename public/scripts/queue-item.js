@@ -30,9 +30,6 @@ class QueueItem extends HTMLElement {
       artist.textContent = this.getAttribute('artist');
 
 
-      wrapper.classList.toggle("active", this.hasAttribute("active"));
-
-
       // Styling
       const style = document.createElement('style');
       style.textContent = `
