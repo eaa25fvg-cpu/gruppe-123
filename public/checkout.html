@@ -8,28 +8,168 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
+    <script src="./scripts/breadcrumb.js" type="module"></script>
+    <script src="scripts/queue-item.js" type="module"></script>
+    <script src="./scripts/queue.js"></script>
 </head>
 <body>
+  <nav-breadcrumb></nav-breadcrumb>
+
+
+  <div class="row-container">
+
+
     <div class="row-container">
-        <div class="summary-column">
-            <h3>Sange du har valgt</h3>
-            <div class="song-list">
-                <div class="song-item">
-                  <div class="song-info">
-                    <img class="song-cover" src="files/sample-cover.png" alt="Snooze cover art">
-                    <div class="song-meta">
-                      <span class="song-name">Snooze</span>
-                      <span class="song-artist">SZA</span>
-                    </div>
-                    <p id="price" class="price">2kr.</p>
-                  </div>
-                </div>
-              </div>    
+  
+  
+      <!-- Sangliste kolonne -->
+      <div class="summary-column">
+        <h2>Sange du har valgt</h2>
+  
+  
+        <div class="queue-summary" id="queue-list"></div>
+
+        <div class="song-summary">
+          <div class="inline-text">
+            <p>Antal sange<p>
+              <p id="songCount">2</p>
+          </div>
+          <div>
+          <div class="inline-text">
+            <p>Total</p>
+            <div>
+              <span id="oldprice">6kr.</span>
+              <span id="price">4 kr.</span>
+            </div>
+          </div>
+          <div class="savings" id="savings">
+            <p>Du sparer 1 kr.<p>
+          </div>
         </div>
-        <div class="pay-column">
-            <h3>Vælg betalingsmetode</h3>
-            /Users/frederikgjortz/src/studie/Lektion 1/Jukebox/checkout.html
+
+        <div class="upsell" id="upsell">
+          <img src="files/Rat.png" style="width: 50px;">
+          <div class="upsell-msg">
+            <p>Hey! Vidste du, at du kan tilføje en ekstra sang for kun 1 kr. mere?</p>
+            <a href="/discover.html" class="primary-btn">Tilføj sang</a>
+          </div>
         </div>
+
+        </div>
+        </div>
+      </div>
+  
+      <!-- Betalingsmetode kolonne -->
+      <div class="pay-column">
+        <h2>Vælg betalingsmetode</h2>
+  
+  
+        <!-- Option 1: MobilePay -->
+        <label class="option active">
+          <div>
+            <!-- "Radio button" kan kun vælge én mulighed -->
+            <input type="radio" name="payment" value="mobilepay" checked>
+            <strong>MobilePay</strong>
+            <!-- bare text yayayay -->
+            <div class="note">Når du har klikket på “Betal nu”, vil du blive videresendt til MobilePay.</div>
+          </div>
+          <img src="https://play-lh.googleusercontent.com/a5CpQQFBKcnvyr-Z5y6Cwp7Fk3NXR3ytv5IAM3_QXPYuIqf0Iguc8r41tBQDJ40eKTdg" alt="MobilePay">
+        </label>
+  
+  
+        <!-- Bare text igenn -->
+        <div class="divider-text">eller</div>
+  
+  
+        <!-- Option 2: Betal i baren -->
+        <label class="option">
+          <div>
+            <input type="radio" name="payment" value="bar">
+            <strong>Betal i baren</strong>
+          </div>
+          <img src="https://media.istockphoto.com/id/1408144044/vector/bar-or-pub-at-evening-with-alcohol-drinks-bottles-bartender-table-interior-and-chairs-in.jpg?s=612x612&w=0&k=20&c=U_nQcOjPtpFEvdm7FRze9ag7KyjNBgn-ALPgTr3P0h4=" alt="Card">
+        </label>
+  
+  
+        <!-- Laver dynamisk slutbeløbs knap som ændrer sig alt efter hvor mange sange man har valgt -->
+        <button class="primary-btn" id="payBtn">Betal nu • 0 kr.</button>
+      </div>
     </div>
+
+
+
+    <script>
+        const queueList = document.getElementById("queue-list");
+        const showSavings = document.getElementById("savings");
+        const showOldPrice = document.getElementById("oldprice");
+        const showUpsell = document.getElementById("upsell");
+
+        function renderQueue() {
+          let queueItems = songsQueue;
+          let price = queueItems.length * 2;
+          if (queueItems.length === 3) {
+            showOldPrice.style.display = "inline";
+            showOldPrice.innerHTML = price + " kr."
+            showSavings.style.display = "flex";
+            showUpsell.style.display = "none"
+            price -= 1;
+          }; 
+          document.getElementById("price").innerHTML = price + " kr.";
+          document.getElementById("songCount").innerHTML = songsQueue.length + " sange";
+          document.getElementById("payBtn").innerHTML = "Betal nu • " + price + " kr." ;
+          let html = "";
+          queueItems.forEach((song) => {
+            html += `
+            <div class="queueItem">
+              <queue-item
+                title="${song.name}"
+                artist="${song.artist_name}"
+                cover="${song.cover_image}"
+              >
+              </queue-item>
+            </div>
+            `;
+          });
+          queueList.innerHTML = html;
+        }
+
+        renderQueue()
+    </script>
+
+<script>
+  /* Ved ikke hvad man kalder det */
+  const options = document.querySelectorAll('.option'); // payment options
+  const payBtn = document.getElementById('payBtn'); // pay buttons
+
+
+  /* Vælg betalingsmetode */
+  options.forEach(option => {
+    option.addEventListener('click', () => {
+      // fjerner "active" class
+      options.forEach(o => o.classList.remove('active'));
+      // tilføjer "active" til den valgte
+      option.classList.add('active');
+      // marker dens "radio" input som valgt
+      option.querySelector('input').checked = true;
+    });
+  });
+
+
+  /* Når man klikker på betalingsknappen */
+  payBtn.addEventListener('click', () => {
+    // finder den valgte betalingsmetode
+    const selected = document.querySelector('input[name="payment"]:checked').value;
+
+
+    // Hvis "MobilePay"
+    if (selected === 'mobilepay') {
+      alert('Videresender til MobilePay...'); // Placeholder for redirect
+    }
+    // Hvis "betal i baren"
+    else {
+      alert('Du har valgt at betale i baren. Tak!');
+    }
+  });
+</script>
 </body>
 </html>
